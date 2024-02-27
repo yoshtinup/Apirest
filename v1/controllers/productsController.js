@@ -3,7 +3,7 @@ import { productsService } from "../services/productsService.js";
 export const productsController = {
     getAllProducts : async (req, res) => {
         const allProducts = await productsService.getAllProducts();
-        res.status(200).send({ status: "OK", data: allProducts });
+        res.status(200).send(allProducts);
     },
     getOneProduct : async (req, res) => {
         let id = req.params.id;
