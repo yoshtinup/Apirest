@@ -15,9 +15,19 @@ export const productsController = {
         const createProduct = await productsService.createNewProduct(data);
         res.status(200).send({ status: "OK", data: createProduct });
     },
-    updateOneProduct : (req, res) => {
-        const updateProduct = productsService.updateOneProduct();
-        res.send("Update an existing workout");
+    updateOneProduct: async (req, res) => {
+        const id = req.params.id;
+        const data = req.body; // Obtener datos del cuerpo de la solicitud
+        try {
+            const updatedProduct = await productsService.updateOneProduct(id, data);
+            if (updatedProduct) {
+                res.status(200).send({ status: "OK", data: updatedProduct });
+            } else {
+                res.status(404).send({ status: "Not Found", message: "Product not found or not updated" });
+            }
+        } catch (error) {
+            res.status(500).send({ status: "Error", message: "Internal server error" });
+        }
     },
     deleteOneProduct : async (req, res) => {
         let id = req.params.id;
